@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  @apply min-w-[320px] bg-white text-black;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.title {
+  @apply mb-6 text-5xl font-extrabold leading-tight tracking-tighter sm:text-center md:text-6xl;
+}
+
+.heading-1 {
+  @apply text-3xl font-extrabold tracking-tight md:text-4xl;
+}
+
+.full-size-button {
+  @apply flex h-10 w-full items-center justify-center rounded-md px-3 py-2 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 sm:mx-auto;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text pr-px text-transparent;
+}
+
+.inline-tag {
+  @apply mr-2 mt-3 inline-flex w-max items-center rounded-full border bg-white px-3 py-1 text-xs font-bold uppercase leading-tight text-gray-700;
+}
+
+.table-col-header {
+  @apply whitespace-nowrap px-3 py-3.5 text-left text-sm font-semibold;
+}
+
+.table-cell {
+  @apply whitespace-nowrap px-3 py-4 text-sm text-gray-500;
+}
+
+.dropdown-item {
+  @apply flex w-full items-center rounded-md px-2 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+.playlist-info-icon {
+  @apply mr-1.5 h-4 w-4 flex-shrink-0 fill-gray-500;
+}
