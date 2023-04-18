@@ -39,7 +39,7 @@ export default async function handler(req, res) {
                 Authorization: `Bearer ${session.accessToken}`,
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(uris),
+              body: JSON.stringify({ uris: uris }),
             }
           );
 

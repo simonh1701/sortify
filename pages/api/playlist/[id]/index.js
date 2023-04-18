@@ -11,29 +11,59 @@ export default async function handler(req, res) {
         if (id === "undefined" || id === "null")
           return res.status(404).json({ error: "Invalid playlist Id" });
 
-        let playlistTracksEndpoint = `https://api.spotify.com/v1/playlists/${id}/tracks?limit=50&fields=next,items(track(album(id,images,name,release_date,release_date_precision),artists,duration_ms,id,name,popularity,preview_url,uri))`;
+        let playlistItemsEndpoint = `https://api.spotify.com/v1/playlists/${id}/tracks?limit=50&fields=next,items(added_at,is_local,track(album(id,images,name,release_date,release_date_precision),artists,duration_ms,id,name,popularity,preview_url,type,uri))`;
 
         let allItems = [];
 
         do {
-          const playlistTracksResponse = await fetch(playlistTracksEndpoint, {
+          const playlistItemsResponse = await fetch(playlistItemsEndpoint, {
             headers: {
               Authorization: `Bearer ${session.accessToken}`,
             },
           });
 
-          if (!playlistTracksResponse.ok)
+          if (!playlistItemsResponse.ok)
             return res
-              .status(playlistTracksResponse.status)
-              .json(await playlistTracksResponse.json());
+              .status(playlistItemsResponse.status)
+              .json(await playlistItemsResponse.json());
 
-          const playlistTracks = await playlistTracksResponse.json();
+          const playlistItems = await playlistItemsResponse.json();
 
-          const tracks = playlistTracks?.items;
+          const items = playlistItems.items;
 
-          allItems.push(...tracks);
-          playlistTracksEndpoint = playlistTracks?.next;
-        } while (playlistTracksEndpoint);
+          const ids = items
+            .filter((item) => item.track.type === "track" && !item.is_local)
+            .map((item) => item.track.id)
+            .join(",");
+
+          const tracksAudioFeaturesEndpoint = `https://api.spotify.com/v1/audio-features?ids=${ids}`;
+
+          const tracksAudioFeaturesResponse = await fetch(
+            tracksAudioFeaturesEndpoint,
+            {
+              headers: {
+                Authorization: `Bearer ${session.accessToken}`,
+              },
+            }
+          );
+
+          if (!tracksAudioFeaturesResponse.ok)
+            return res
+              .status(tracksAudioFeaturesResponse.status)
+              .json(await tracksAudioFeaturesResponse.json());
+
+          const tracksAudioFeatures = await tracksAudioFeaturesResponse.json();
+
+          const itemsPlusAudioFeatures = items.map((item) => ({
+            ...item,
+            audio_features: tracksAudioFeatures.audio_features.find(
+              (audio_features) => audio_features.id === item.track.id
+            ),
+          }));
+
+          allItems.push(...itemsPlusAudioFeatures);
+          playlistItemsEndpoint = playlistItems?.next;
+        } while (playlistItemsEndpoint);
 
         const playlistEndpoint = `https://api.spotify.com/v1/playlists/${id}`;
 
