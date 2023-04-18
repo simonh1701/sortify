@@ -32,7 +32,7 @@ export default function TracksTable() {
                 </th>
                 <th
                   scope="col"
-                  className="whitespace-nowrap px-3 py-3.5 pr-4 pl-3 text-right sm:pr-0"
+                  className="whitespace-nowrap px-3 py-3.5 pr-4 pl-3 text-right text-sm font-semibold sm:pr-0"
                 >
                   Preview
                 </th>
