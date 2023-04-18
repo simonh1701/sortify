@@ -7,6 +7,10 @@ export default async function handler(req, res) {
       const session = await getServerSession(req, res, authOptions);
       if (session && session.accessToken) {
         const { id } = req.query;
+        const body = JSON.parse(req.body);
+        const uris = body.uris.filter(
+          (uri) => !uri.startsWith("spotify:local:")
+        );
         const playlistTracksEndpoint = `https://api.spotify.com/v1/playlists/${id}/tracks`;
         const replaceResponse = await fetch(playlistTracksEndpoint, {
           method: "PUT",
@@ -14,7 +18,7 @@ export default async function handler(req, res) {
             Authorization: `Bearer ${session.accessToken}`,
             "Content-Type": "application/json",
           },
-          body: req.body,
+          body: JSON.stringify({ uris: uris }),
         });
 
         if (!replaceResponse.ok)
