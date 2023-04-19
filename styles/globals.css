@@ -47,7 +47,7 @@ a {
 }
 
 .dropdown-item {
-  @apply flex w-full items-center rounded-md px-2 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40;
+  @apply flex w-full items-center rounded-md px-2 py-2 text-sm disabled:cursor-not-allowed disabled:text-black/40;
 }
 
 .playlist-info-icon {
