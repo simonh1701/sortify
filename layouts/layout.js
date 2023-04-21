@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Footer from "components/footer";
 import Navbar from "components/navbar";
 
 export default function Layout({ children, ...customMeta }) {
@@ -13,8 +14,11 @@ export default function Layout({ children, ...customMeta }) {
       <Head>
         <title>{meta.title}</title>
       </Head>
-      <Navbar></Navbar>
-      <main className="px-4 sm:px-6 lg:px-8">{children}</main>
+      <div className="flex min-h-screen flex-col">
+        <Navbar></Navbar>
+        <main className="flex-1 px-4 sm:px-6 lg:px-8">{children}</main>
+        <Footer></Footer>
+      </div>
     </>
   );
 }
