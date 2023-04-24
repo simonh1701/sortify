@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { AudioProvider } from "components/playlistDetail/audioprovider";
+import LocalItemsWarningBanner from "components/playlistDetail/localItemsWarningBanner";
 import PlaylistInfo from "components/playlistDetail/playlistInfo";
 import TracksTable from "components/playlistDetail/tracksTable";
 import { PlaylistContext, UserContext } from "lib/context";
@@ -43,6 +44,7 @@ export default function PlaylistDetail() {
         }}
       >
         <AudioProvider>
+          <LocalItemsWarningBanner />
           <PlaylistInfo />
           <TracksTable />
         </AudioProvider>
