@@ -16,7 +16,6 @@ import { classNames } from "lib/utils";
 export default function PlaylistInfo() {
   const { playlist } = useContext(PlaylistContext);
   const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
-  const [overwriteAddedAt, setOverwriteAddedAt] = useState(true);
 
   return (
     <div className="lg:flex lg:items-center lg:justify-between">
@@ -42,13 +41,8 @@ export default function PlaylistInfo() {
           <SaveDropdown
             selectedSortOption={selectedSortOption}
             setSelectedSortOption={setSelectedSortOption}
-            overwriteAddedAt={overwriteAddedAt}
           />
         </div>
-        <OverwriteAddedAtCheckbox
-          overwriteAddedAt={overwriteAddedAt}
-          setOverwriteAddedAt={setOverwriteAddedAt}
-        />
       </div>
     </div>
   );
@@ -134,11 +128,7 @@ function SortDropdown({ selectedSortOption, setSelectedSortOption }) {
   );
 }
 
-function SaveDropdown({
-  selectedSortOption,
-  setSelectedSortOption,
-  overwriteAddedAt,
-}) {
+function SaveDropdown({ selectedSortOption, setSelectedSortOption }) {
   const router = useRouter();
   const user = useContext(UserContext);
   const { playlist, mutatePlaylist } = useContext(PlaylistContext);
@@ -154,39 +144,17 @@ function SaveDropdown({
 
     const { id } = router.query;
 
-    let response;
+    const overwriteResponse = await fetch(`/api/playlist/${id}/overwrite`, {
+      method: "PUT",
+      body: JSON.stringify({
+        uris: orderdPlaylist.items.map(
+          (playlistItem) => playlistItem.track.uri
+        ),
+      }),
+    });
 
-    if (overwriteAddedAt) {
-      response = await fetch(`/api/playlist/${id}/overwrite`, {
-        method: "PUT",
-        body: JSON.stringify({
-          uris: orderdPlaylist.items.map(
-            (playlistItem) => playlistItem.track.uri
-          ),
-        }),
-      });
-    } else if (orderdPlaylist.items.length <= 100) {
-      response = await fetch(`/api/playlist/${id}/replace`, {
-        method: "PUT",
-        body: JSON.stringify({
-          uris: orderdPlaylist.items.map(
-            (playlistItem) => playlistItem.track.uri
-          ),
-        }),
-      });
-    } else {
-      response = await fetch(`/api/playlist/${id}/reorder`, {
-        method: "PUT",
-        body: JSON.stringify({
-          reorder: orderdPlaylist.items.map(
-            (playlistItem) => playlistItem.index
-          ),
-        }),
-      });
-    }
-
-    if (!response.ok) {
-      console.log(await response.json());
+    if (!overwriteResponse.ok) {
+      console.log(await overwriteResponse.json());
       setLoading(false);
       setWarning(true);
       return;
@@ -297,39 +265,5 @@ function SaveDropdown({
         </Menu.Items>
       </Transition>
     </Menu>
-  );
-}
-
-function OverwriteAddedAtCheckbox({ overwriteAddedAt, setOverwriteAddedAt }) {
-  const user = useContext(UserContext);
-  const { playlist } = useContext(PlaylistContext);
-  const isOwner = playlist?.owner?.uri === user?.uri;
-
-  return (
-    <div
-      className={classNames(
-        !isOwner && "opacity-40",
-        "flex lg:flex-row-reverse"
-      )}
-    >
-      <div className="flex h-6 items-center">
-        <input
-          id="overwriteAddedAt"
-          type="checkbox"
-          checked={overwriteAddedAt}
-          disabled={!isOwner}
-          onChange={() => {
-            setOverwriteAddedAt(!overwriteAddedAt);
-          }}
-          className="h-4 w-4 rounded border-gray-300 text-blue-500 focus:ring-blue-500 disabled:text-gray-500"
-        />
-      </div>
-      <div className="ml-3 text-sm leading-6 lg:ml-0 lg:mr-3">
-        <label htmlFor="overwriteAddedAt" className="font-medium">
-          Overwrite <span className="italic">Added At</span>
-          <span className="ml-1 text-gray-500">(Recommended)</span>
-        </label>
-      </div>
-    </div>
   );
 }
