@@ -11,7 +11,7 @@ export default function PlaylistsOverview() {
     data: playlists,
     error: playlistsError,
     isValidating: playlistsIsValidating,
-  } = useSWR("/api/playlists", fetcher, swrOptions);
+  } = useSWR("/api/v1/playlists", fetcher, swrOptions);
 
   if (playlistsError?.status === 401) {
     router.replace(

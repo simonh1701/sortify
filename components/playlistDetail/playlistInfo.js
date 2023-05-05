@@ -144,7 +144,7 @@ function SaveDropdown({ selectedSortOption, setSelectedSortOption }) {
 
     const { id } = router.query;
 
-    const overwriteResponse = await fetch(`/api/playlist/${id}/overwrite`, {
+    const overwriteResponse = await fetch(`/api/v1/playlist/${id}/overwrite`, {
       method: "PUT",
       body: JSON.stringify({
         uris: orderdPlaylist.items.map(
@@ -169,7 +169,7 @@ function SaveDropdown({ selectedSortOption, setSelectedSortOption }) {
     setWarning(false);
     setLoading(true);
 
-    const newPlaylistResponse = await fetch("/api/playlist/new", {
+    const newPlaylistResponse = await fetch("/api/v1/playlist/new", {
       method: "POST",
       body: JSON.stringify({
         name:
@@ -188,7 +188,7 @@ function SaveDropdown({ selectedSortOption, setSelectedSortOption }) {
 
     const { id } = await newPlaylistResponse.json();
 
-    const overrideResponse = await fetch(`/api/playlist/${id}/overwrite`, {
+    const overrideResponse = await fetch(`/api/v1/playlist/${id}/overwrite`, {
       method: "PUT",
       body: JSON.stringify({
         uris: orderdPlaylist.items.map(

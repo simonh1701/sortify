@@ -16,13 +16,13 @@ export default function PlaylistDetail() {
     mutate: mutatePlaylist,
     error: playlistError,
     isValidating: playlistIsValidating,
-  } = useSWR(`/api/playlist/${router.query.id}`, fetcher, swrOptions);
+  } = useSWR(`/api/v1/playlist/${router.query.id}`, fetcher, swrOptions);
 
   const {
     data: user,
     error: userError,
     isValidating: userIsValidating,
-  } = useSWR("/api/user", fetcher, swrOptions);
+  } = useSWR("/api/v1/user", fetcher, swrOptions);
 
   if (playlistError?.status === 401 || userError?.status === 401)
     router.replace(
