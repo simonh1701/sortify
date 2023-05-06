@@ -33,18 +33,18 @@ export default function PlaylistInfo() {
         </div>
       </div>
       {playlist.items.length !== 0 && (
-      <div className="mt-5 lg:mt-0 lg:ml-10">
-        <div className="mb-3 flex">
-          <SortDropdown
-            selectedSortOption={selectedSortOption}
-            setSelectedSortOption={setSelectedSortOption}
-          />
-          <SaveDropdown
-            selectedSortOption={selectedSortOption}
-            setSelectedSortOption={setSelectedSortOption}
-          />
+        <div className="mt-5 lg:mt-0 lg:ml-10">
+          <div className="mb-3 flex">
+            <SortDropdown
+              selectedSortOption={selectedSortOption}
+              setSelectedSortOption={setSelectedSortOption}
+            />
+            <SaveDropdown
+              selectedSortOption={selectedSortOption}
+              setSelectedSortOption={setSelectedSortOption}
+            />
+          </div>
         </div>
-      </div>
       )}
     </div>
   );
@@ -162,7 +162,13 @@ function SaveDropdown({ selectedSortOption, setSelectedSortOption }) {
       return;
     }
 
-    mutatePlaylist();
+    mutatePlaylist({
+      ...orderdPlaylist,
+      items: orderdPlaylist.items.filter(
+        (item) => item.track.type === "track" && !item.is_local
+      ),
+    });
+
     setSelectedSortOption(sortOptions[0]);
     setLoading(false);
   };

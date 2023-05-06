@@ -10,7 +10,7 @@ export default function PlaylistsOverview() {
   const {
     data: playlists,
     error: playlistsError,
-    isValidating: playlistsIsValidating,
+    isLoading: playlistsIsLoading,
   } = useSWR("/api/v1/playlists", fetcher, swrOptions);
 
   if (playlistsError?.status === 401) {
@@ -21,7 +21,7 @@ export default function PlaylistsOverview() {
 
   if (playlistsError) return <h1 className="heading-1 mb-8">Failed to load</h1>;
 
-  if (playlistsIsValidating)
+  if (playlistsIsLoading || !playlists)
     return <h1 className="heading-1 mb-8">Loading...</h1>;
 
   console.log(playlists);

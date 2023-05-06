@@ -15,13 +15,20 @@ export default function PlaylistDetail() {
     data: playlist,
     mutate: mutatePlaylist,
     error: playlistError,
-    isValidating: playlistIsValidating,
-  } = useSWR(`/api/v1/playlist/${router.query.id}`, fetcher, swrOptions);
+    isLoading: playlistIsLoading,
+  } = useSWR(
+    () => {
+      if (router.query.id) return `/api/v1/playlist/${router.query.id}`;
+      else return null;
+    },
+    fetcher,
+    swrOptions
+  );
 
   const {
     data: user,
     error: userError,
-    isValidating: userIsValidating,
+    isLoading: userIsLoading,
   } = useSWR("/api/v1/user", fetcher, swrOptions);
 
   if (playlistError?.status === 401 || userError?.status === 401)
@@ -32,7 +39,7 @@ export default function PlaylistDetail() {
   if (playlistError || userError)
     return <h1 className="heading-1 mb-8">Failed to load</h1>;
 
-  if (playlistIsValidating || userIsValidating)
+  if (playlistIsLoading || userIsLoading || !playlist)
     return <h1 className="heading-1 mb-8">Loading...</h1>;
 
   return (
