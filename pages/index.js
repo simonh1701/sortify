@@ -6,7 +6,7 @@ export default function Home() {
   const loading = status === "loading";
 
   return (
-    <div className="mx-auto mt-8 max-w-3xl sm:mt-20">
+    <div className="mx-auto mt-8 w-full max-w-3xl sm:mt-20">
       <h1 className="title">
         Sort your music with <span className="gradient-text">Sortify.</span>
       </h1>

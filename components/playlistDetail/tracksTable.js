@@ -1,12 +1,19 @@
 import Image from "next/image";
 import { useContext, useMemo } from "react";
-import { NotAllowedIcon, PauseIcon, PlayIcon } from "components/icons";
+import {
+  MusicFolderIcon,
+  NotAllowedIcon,
+  PauseIcon,
+  PlayIcon,
+} from "components/icons";
 import { PlaylistContext } from "lib/context";
 import { useAudioPlayer } from "lib/useAudioPlayer";
 import { formatDuration } from "lib/utils";
 
 export default function TracksTable() {
   const { playlist } = useContext(PlaylistContext);
+
+  if (playlist.items.length === 0) return <EmptyState />;
 
   return (
     <div className="mt-8 flow-root">
@@ -186,6 +193,20 @@ function TrackRow({ playlistItem }) {
         </button>
       </td>
     </tr>
+  );
+}
+
+function EmptyState() {
+  return (
+    <div className="flex min-h-full flex-1 flex-col justify-center py-4">
+      <div className="-mt-40 flex flex-col sm:items-center">
+        <MusicFolderIcon className="h-12 w-12 flex-shrink-0 fill-gray-500" />
+        <p className="mt-2 text-sm font-semibold">No Items</p>
+        <p className="mt-1 text-sm text-gray-500">
+          Add songs to this playlist.
+        </p>
+      </div>
+    </div>
   );
 }
 

@@ -5,7 +5,7 @@ export default function Main() {
   const router = useRouter();
 
   return (
-    <div className="mx-auto mt-8 max-w-3xl sm:mt-20">
+    <div className="mx-auto mt-8 w-full max-w-3xl sm:mt-20">
       <h1 className="heading-1 sm:text-center">You&apos;re not signed in</h1>
       <div className="mt-8 flex flex-col gap-10 sm:justify-center">
         <div className="sm:px-32 md:px-40">

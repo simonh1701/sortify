@@ -16,7 +16,9 @@ export default function Layout({ children, ...customMeta }) {
       </Head>
       <div className="flex min-h-screen flex-col">
         <Navbar></Navbar>
-        <main className="flex-1 px-4 sm:px-6 lg:px-8">{children}</main>
+        <main className="flex flex-1 flex-col px-4 sm:px-6 lg:px-8">
+          {children}
+        </main>
         <Footer></Footer>
       </div>
     </>

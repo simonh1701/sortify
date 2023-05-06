@@ -32,6 +32,7 @@ export default function PlaylistInfo() {
           </div>
         </div>
       </div>
+      {playlist.items.length !== 0 && (
       <div className="mt-5 lg:mt-0 lg:ml-10">
         <div className="mb-3 flex">
           <SortDropdown
@@ -44,6 +45,7 @@ export default function PlaylistInfo() {
           />
         </div>
       </div>
+      )}
     </div>
   );
 }
