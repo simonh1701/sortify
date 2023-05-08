@@ -198,8 +198,8 @@ function TrackRow({ playlistItem }) {
 
 function EmptyState() {
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center py-4">
-      <div className="-mt-40 flex flex-col sm:items-center">
+    <div className="flex min-h-full flex-1 flex-col justify-center pt-16 pb-32">
+      <div className="flex flex-col sm:items-center">
         <MusicFolderIcon className="h-12 w-12 flex-shrink-0 fill-gray-500" />
         <p className="mt-2 text-sm font-semibold">No Items</p>
         <p className="mt-1 text-sm text-gray-500">
