@@ -111,7 +111,7 @@ function TrackRow({ playlistItem }) {
               unoptimized
               src={
                 playlistItem.track.album?.images?.at(-1)?.url ??
-                "/placeholder.png"
+                "/images/placeholder.png"
               }
               height={40}
               width={40}

@@ -33,7 +33,7 @@ export default function PlaylistsOverview() {
             <Playlist
               id={playlist.id}
               name={playlist.name}
-              src={playlist.images.at(0)?.url ?? "/placeholder.png"}
+              src={playlist.images.at(0)?.url ?? "/images/placeholder.png"}
               width={playlist.images.at(0)?.width ?? 640}
               height={playlist.images.at(0)?.height ?? 640}
               totalTracks={playlist.tracks.total}
