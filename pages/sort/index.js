@@ -24,8 +24,6 @@ export default function PlaylistsOverview() {
   if (playlistsIsLoading || !playlists)
     return <h1 className="heading-1 mb-8">Loading...</h1>;
 
-  console.log(playlists);
-
   return (
     <>
       <h1 className="heading-1 mb-8">Choose a playlist</h1>
