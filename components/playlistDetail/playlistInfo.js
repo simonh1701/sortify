@@ -156,7 +156,6 @@ function SaveDropdown({ selectedSortOption, setSelectedSortOption }) {
     });
 
     if (!overwriteResponse.ok) {
-      console.log(await overwriteResponse.json());
       setLoading(false);
       setWarning(true);
       return;
@@ -188,7 +187,6 @@ function SaveDropdown({ selectedSortOption, setSelectedSortOption }) {
     });
 
     if (!newPlaylistResponse.ok) {
-      console.log(await newPlaylistResponse.json());
       setLoading(false);
       setWarning(true);
       return;
@@ -206,7 +204,6 @@ function SaveDropdown({ selectedSortOption, setSelectedSortOption }) {
     });
 
     if (!overrideResponse.ok) {
-      console.log(await overrideResponse.json());
       setLoading(false);
       setWarning(true);
       return;
