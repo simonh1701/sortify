@@ -21,8 +21,11 @@ export default function LocalItemsWarningBanner() {
           >
             <circle cx={1} cy={1} r={1} />
           </svg>
-          This playlist contains local files. All local files are removed when
-          sorting the playlist
+          This playlist contains{" "}
+          <u className=" underline decoration-blue-500 decoration-2 underline-offset-[3px]">
+            local files
+          </u>
+          . All local files are removed when sorting the playlist
         </p>
         <button
           onClick={() => setShowBanner(false)}

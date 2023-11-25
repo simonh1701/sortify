@@ -8,7 +8,7 @@ import {
 } from "components/icons";
 import { PlaylistContext } from "lib/context";
 import { useAudioPlayer } from "lib/useAudioPlayer";
-import { formatDuration } from "lib/utils";
+import { classNames, formatDuration } from "lib/utils";
 
 export default function TracksTable() {
   const { playlist } = useContext(PlaylistContext);
@@ -106,7 +106,14 @@ function TrackRow({ playlistItem }) {
     <tr>
       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-0">
         <div className="flex items-center">
-          <div className="aspect-square flex-shrink-0">
+          <div
+            className={classNames(
+              "aspect-square flex-shrink-0",
+              playlistItem.is_local
+                ? "outline outline-2 -outline-offset-2 outline-blue-500"
+                : ""
+            )}
+          >
             <Image
               unoptimized
               src={
